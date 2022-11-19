@@ -6,7 +6,7 @@ const usersSchema = new Schema(
   {
     name: String,
     nim: String,
-    url: String,
+    url: { data: Buffer, contentType: String },
   },
   { timestamps: true }
 );

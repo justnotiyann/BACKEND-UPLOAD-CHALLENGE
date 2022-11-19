@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "argon2": "^0.30.2",
+    "buffer-image": "^1.0.0",
     "buffer-image-size": "^0.6.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

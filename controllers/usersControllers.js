@@ -3,7 +3,7 @@ const sizeOf = require("image-size");
 
 const getUsers = async (req, res, next) => {
   try {
-    const result = await Users.find().select("_id name nim url").lean().exec();
+    const result = await Users.find().select("_id name nim  ");
     res.json({
       msg: "here we go",
       data: result,
@@ -13,33 +13,55 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+// const createUser = async (req, res, next) => {
+//   try {
+//     const { name, nim } = req.body;
+//     const imagePath = req.body.path;
+//     const result = new Users({
+//       name,
+//       nim,
+//       url: imagePath,
+//     });
+//     result.save();
+
+//     res.json({
+//       msg: "berhasil membuat user",
+//     });
+//   } catch (e) {
+//     next(e);
+//   }
+// };
+
 const createUser = async (req, res, next) => {
   try {
     const { name, nim } = req.body;
-    const imagePath = req.body.path;
+    const imagePath = { data: new Buffer.from(req.file.buffer, "base64"), contentType: req.file.mimetype };
     const result = new Users({
       name,
       nim,
       url: imagePath,
     });
     result.save();
-
     res.json({
       msg: "berhasil membuat user",
     });
   } catch (e) {
-    console.log(e);
-    // next(e);
+    next(e);
   }
 };
 
 const getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const result = await Users.findById(id).select("_id name nim url").lean().exec();
+    const result = await Users.findById(id).select("_id name nim url");
+    const b64 = Buffer.from(result.url.data).toString("base64");
+    const mimeType = "image/png";
+
+    const imageHtml = `<img src="data:${mimeType};base64,${b64}" />`;
     res.json({
       msg: "berikut datanya",
       data: result,
+      imageHtml,
     });
   } catch (e) {
     next(e);
