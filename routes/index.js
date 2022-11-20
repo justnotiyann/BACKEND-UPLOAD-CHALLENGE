@@ -1,12 +1,8 @@
 var express = require("express");
 var router = express.Router();
+const controllers = require("../controllers/indexControllers");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", {
-    layout: "./layout/main",
-    title: "Halaman Utama",
-  });
-});
+router.get("/", controllers.getUsers);
 
 module.exports = router;

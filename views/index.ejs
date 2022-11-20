@@ -1,11 +1,57 @@
 <div class="container">
+  <h1>Challange QWARS</h1>
   <div class="row">
-    <div class="col-6 order-lg-2">
-      <img src="../public/images/hero.svg" alt="gambar" width="500" height="500" />
+    <div class="col-6">
+      <form action="/users/add" method="POST" enctype="multipart/form-data">
+        <div class="col mb-2">
+          <label for="name" class="form-label">Masukkan Nama</label>
+          <input required type="text" name="name" class="form-control" />
+        </div>
+        <div class="col mb-2">
+          <label for="nim" class="form-label">Masukkan Nama</label>
+          <input required type="text" id="nim" name="nim" class="form-control" />
+        </div>
+        <div class="col mb-2">
+          <label for="url" class="form-label">Masukkan Nama</label>
+          <input required type="file" name="url" id="url" class="form-control" />
+        </div>
+        <div class="col mb-2">
+          <button class="btn btn-success w-100">Submit</button>
+        </div>
+      </form>
     </div>
-    <div class="col-6 order-lg-1">
-      <img src="../public/images/heroku.png" alt="" />
-      <h1>Selamat datang di website sederhana saia</h1>
+    <div class="col-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Foto</th>
+            <th scope="col">Nama</th>
+            <th scope="col">NIM</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% result.forEach(e => { %>
+          <tr>
+            <td>
+<% 
+let mimeType = e.url.contentType
+let base64 = Buffer.from(e.url.data).toString("base64")
+%> 
+            <img src="data:<%=mimeType%>;base64,<%=base64%>  " alt="">
+            </td>
+            <td><%= e.imageHtml %> </td>
+            <td><%= e.name %></td>
+            <td><%= e.nim %></td>
+            <td>
+              <button class="btn btn-danger">
+                <a href="/users/delete/<%= e._id %> ">Hapus Data</a>
+              </button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

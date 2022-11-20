@@ -42,6 +42,24 @@
 // module.exports = upload;
 const multer = require("multer");
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+      cb(null, true);
+    } else {
+      cb(
+        {
+          message: "Harap upload file hanya jpeg dan png saja !",
+        },
+        false
+      );
+    }
+  },
+  // LIMIT
+  limits: {
+    fileSize: 1024 * 1024,
+  },
+});
 
 module.exports = upload;

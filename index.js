@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const ejsLayout = require("express-ejs-layouts");
 const app = express();
+
 app.listen(3000, () => {
   console.log("server berjalan");
 });

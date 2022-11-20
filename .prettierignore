@@ -1,0 +1,3 @@
+*.ejs
+views/*.ejs
+views/layout/*.ejs
