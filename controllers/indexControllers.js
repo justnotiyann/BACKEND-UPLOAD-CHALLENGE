@@ -1,24 +1,31 @@
 const Users = require("../models/Users");
 const sizeOf = require("image-size");
 
+// const renderUI = ()
+
 const getUsers = async (req, res, next) => {
   try {
     const result = await Users.find().select("_id name nim url  ");
     let b64;
     let mimeType;
     let imageHtml;
+    let alert;
 
-    result.forEach((e) => {
-      b64 = Buffer.from(e.url.data).toString("base64");
-      mimeType = "image/jpeg";
-      imageHtml = `<img src="data:${mimeType};base64,${b64}" />`;
+    if (result <= 0) {
       res.render("index", {
         layout: "./layout/main",
         title: "Halaman Utama",
         result,
-        imageHtml,
+        alert: 1,
       });
-    });
+    } else {
+      res.render("index", {
+        layout: "./layout/main",
+        title: "Halaman Utama",
+        result,
+        alert: 0,
+      });
+    }
   } catch (e) {
     next(e);
   }

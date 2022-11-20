@@ -1,8 +1,8 @@
-<div class="container">
-  <h1>Challange QWARS</h1>
+<div class="container" id="container_utama">
+  <h1>CHALLENGE QWARS</h1>
   <div class="row">
     <div class="col-6">
-      <form action="/users/add" method="POST" enctype="multipart/form-data">
+      <form autocomplete="off" action="/users/add" method="POST" enctype="multipart/form-data">
         <div class="col mb-2">
           <label for="name" class="form-label">Masukkan Nama</label>
           <input required type="text" name="name" class="form-control" />
@@ -16,11 +16,11 @@
           <input required type="file" name="url" id="url" class="form-control" />
         </div>
         <div class="col mb-2">
-          <button class="btn btn-success w-100">Submit</button>
+          <button class="btn btn-success w-100 fw-bold">Submit</button>
         </div>
       </form>
     </div>
-    <div class="col-6">
+    <div class="col-lg-6 overflow-auto" id="col_tabel">
       <table class="table">
         <thead>
           <tr>
@@ -33,25 +33,55 @@
         <tbody>
           <% result.forEach(e => { %>
           <tr>
-            <td>
-<% 
-let mimeType = e.url.contentType
-let base64 = Buffer.from(e.url.data).toString("base64")
-%> 
-            <img src="data:<%=mimeType%>;base64,<%=base64%>  " alt="">
+            <td class="d-flex justify-content-center align-items-center">
+              <% let mimeType = e.url.contentType %> <% let base64 = Buffer.from(e.url.data).toString("base64") %>
+              <img src="data:<%=mimeType%>;base64,<%=base64%>" class="rounded-circle" alt="omaga" width="100" />
             </td>
-            <td><%= e.imageHtml %> </td>
             <td><%= e.name %></td>
             <td><%= e.nim %></td>
             <td>
               <button class="btn btn-danger">
-                <a href="/users/delete/<%= e._id %> ">Hapus Data</a>
-              </button>
+              <a href="/users/delete/<%= e._id %>" class="fw-bold" id="button_delete">Hapus Data </a>
+            </button>
             </td>
+
+          </td>
           </tr>
-          <% }) %>
+          <% }) %> <% if (alert == 1) { %>
+          <div class="alert alert-warning fw-bold" role="alert">Data belum tersedia</div>
+          <% } %>
+          <td>
+
         </tbody>
       </table>
     </div>
   </div>
 </div>
+
+<div class="container-fluid" id="footer">
+  <div class="row">
+      <p class="fw-bold text-center">
+        CREATED BY MUHAMMAD FITRIAN SHOUSYADE ALMADINA
+      </p>
+  </div>
+</div>
+
+<style>
+  #container_utama {
+    margin-top: 10em;
+  }
+  #col_tabel {
+    height: 30em;
+  }
+  #footer{
+    padding: 2em;
+    color: black;
+  }
+</style>
+
+<script>
+  const getDelete =document.querySelector('#button_delete')
+  getDelete.addEventListener('click',()=>{
+    confirm('anda yakin ?')
+  })
+</script>
